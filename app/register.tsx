@@ -38,26 +38,22 @@ export default function RegisterScreen() {
   };
 
   return (
-    // KeyboardAvoidingView pushes the form up when the keyboard opens
+    
     <KeyboardAvoidingView
       style={styles.container}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <ScrollView contentContainerStyle={styles.scrollContent}>
 
-        {/* ── HEADER ── */}
         <View style={styles.header}>
           <Text style={styles.logo}>🌾</Text>
           <Text style={styles.appName}>RécolteCheck</Text>
           <Text style={styles.tagline}>Gérez vos parcelles facilement</Text>
         </View>
 
-        {/* ── CARD ── */}
         <View style={styles.card}>
           <Text style={styles.title}>Créer un compte</Text>
           <Text style={styles.subtitle}>Rejoignez RécolteCheck en tant qu'agriculteur</Text>
-
-          {/* Email input */}
           <Text style={styles.label}>Email</Text>
           <TextInput
             placeholder="exemple@email.com"
@@ -69,7 +65,6 @@ export default function RegisterScreen() {
             style={styles.input}
           />
 
-          {/* Password input */}
           <Text style={styles.label}>Mot de passe</Text>
           <TextInput
             placeholder="Minimum 6 caractères"
@@ -80,7 +75,6 @@ export default function RegisterScreen() {
             style={styles.input}
           />
 
-          {/* Register button */}
           <TouchableOpacity
             onPress={handleRegister}
             disabled={loading}
@@ -91,7 +85,6 @@ export default function RegisterScreen() {
             </Text>
           </TouchableOpacity>
 
-          {/* Login link */}
           <Text style={styles.loginText}>
             Vous avez déjà un compte ?{" "}
             <Link href="/login" style={styles.loginLink}>
@@ -105,11 +98,10 @@ export default function RegisterScreen() {
   );
 }
 
-// ── STYLES ──────────────────────────────────────────────
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f0f7f0", // Light green background
+    backgroundColor: "#f0f7f0",
   },
   scrollContent: {
     flexGrow: 1,
@@ -117,7 +109,6 @@ const styles = StyleSheet.create({
     padding: 24,
   },
 
-  // Header section (logo + title above the card)
   header: {
     alignItems: "center",
     marginBottom: 28,
@@ -137,17 +128,14 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
 
-  // White card that holds the form
   card: {
     backgroundColor: "#ffffff",
     borderRadius: 20,
     padding: 24,
-    // Shadow for iOS
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.08,
     shadowRadius: 12,
-    // Shadow for Android
     elevation: 5,
   },
   title: {
@@ -162,7 +150,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
 
-  // Input label
   label: {
     fontSize: 13,
     fontWeight: "600",
@@ -170,7 +157,6 @@ const styles = StyleSheet.create({
     marginBottom: 6,
   },
 
-  // Text inputs
   input: {
     borderWidth: 1.5,
     borderColor: "#b7e4c7",
@@ -182,7 +168,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
-  // Register button
   button: {
     backgroundColor: "#2d6a4f",
     borderRadius: 14,
@@ -199,7 +184,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  // "Already have an account?" text
   loginText: {
     textAlign: "center",
     marginTop: 20,

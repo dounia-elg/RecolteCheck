@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import { auth } from "../config/firebase";
 
 function authErrorMessage(code?: string) {
@@ -38,4 +38,8 @@ export async function login(email: string, password: string) {
   } catch (err: any) {
     throw new Error(authErrorMessage(err?.code));
   }
+}
+
+export async function logout() {
+  await signOut(auth);
 }
