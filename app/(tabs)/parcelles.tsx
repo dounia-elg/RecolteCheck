@@ -15,7 +15,9 @@ export default function ParcellesScreen() {
     setLoading(false);
   }, []);
 
-  useFocusEffect(load);
+  useFocusEffect(() => {
+    load();
+  });
 
   const handleDelete = (id: string, nom: string) => {
     Alert.alert("Supprimer", `Supprimer "${nom}" ?`, [
