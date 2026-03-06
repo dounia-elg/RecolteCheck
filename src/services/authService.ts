@@ -30,3 +30,12 @@ export async function register(email: string, password: string) {
     throw new Error(authErrorMessage(err?.code));
   }
 }
+
+export async function login(email: string, password: string) {
+  try {
+    const cred = await signInWithEmailAndPassword(auth, email, password);
+    return cred.user;
+  } catch (err: any) {
+    throw new Error(authErrorMessage(err?.code));
+  }
+}
