@@ -3,6 +3,7 @@ import { db, auth } from "../config/firebase";
 
 export async function getParcelles() {
   const userId = auth.currentUser?.uid;
+  if (!userId) return [];
   const q = query(collection(db, "parcelles"), where("userId", "==", userId));
   const snapshot = await getDocs(q);
   return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
