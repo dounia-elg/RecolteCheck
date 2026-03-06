@@ -50,9 +50,9 @@ export default function ParcellesScreen() {
             <View style={styles.card}>
               <View style={{ flex: 1 }}>
                 <Text style={styles.cardName}>{item.nom}</Text>
-                <Text style={styles.cardDetail}>🌿 {item.culture}</Text>
-                <Text style={styles.cardDetail}>📐 {item.surface} ha</Text>
-                <Text style={styles.cardDetail}>📅 {item.periodeRecolte}</Text>
+                <Text style={styles.cardDetail}>🌿 Culture : {item.culture}</Text>
+                <Text style={styles.cardDetail}>📐 Surface : {item.surface} ha</Text>
+                <Text style={styles.cardDetail}>📅 Période de récolte : {item.periodeRecolte}</Text>
               </View>
               <TouchableOpacity onPress={() => handleDelete(item.id, item.nom)}>
                 <Ionicons name="trash-outline" size={22} color="#e63946" />
