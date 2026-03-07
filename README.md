@@ -1,51 +1,169 @@
-# Welcome to your Expo app 👋
+# 🌾 RécolteCheck
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Application mobile développée avec **React Native** et **Firebase** permettant aux agriculteurs de gérer leurs parcelles et de suivre leurs récoltes de manière simple et centralisée.
 
-## Get started
+---
 
-1. Install dependencies
+## 📋 Description du projet
 
-   ```bash
-   npm install
-   ```
+Le secteur agricole repose encore largement sur des méthodes traditionnelles (cahiers papier, notes informelles). RécolteCheck digitalise cette gestion en proposant une application mobile intuitive, utilisable sur **Android et iOS**, adaptée aux utilisateurs peu technophiles.
 
-2. Start the app
+### Fonctionnalités principales
 
-   ```bash
-   npx expo start
-   ```
+- 🔐 **Authentification** — Inscription et connexion via Firebase Authentication
+- 🗺️ **Gestion des parcelles** — Ajout, consultation et suppression des parcelles agricoles (nom, surface, culture, période de récolte)
+- 🌾 **Suivi des récoltes** — Enregistrement des récoltes par zone avec date et poids
+- 👤 **Profil agriculteur** — Visualisation du compte et déconnexion
+- ☁️ **Synchronisation cloud** — Toutes les données sont stockées et synchronisées via Firebase Firestore
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🏗️ Architecture de l'application
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+RecolteCheck/
+├── app/                          # Écrans de l'application (routing basé sur les fichiers)
+│   ├── _layout.tsx               # Layout racine + garde d'authentification Firebase
+│   ├── login.tsx                 # Écran de connexion
+│   ├── register.tsx              # Écran d'inscription
+│   ├── ajouterParcelle.tsx       # Formulaire d'ajout d'une parcelle
+│   ├── ajouterRecolte.tsx        # Formulaire d'ajout d'une récolte
+│   └── (tabs)/                   # Écrans principaux avec barre de navigation
+│       ├── _layout.tsx           # Configuration de la barre d'onglets
+│       ├── parcelles.tsx         # Liste des parcelles
+│       ├── recoltes.tsx          # Liste des récoltes
+│       └── profil.tsx            # Profil utilisateur + déconnexion
+│
+├── src/
+│   ├── config/
+│   │   └── firebase.ts           # Initialisation Firebase (Auth + Firestore)
+│   └── services/
+│       ├── authService.ts        # Fonctions : register, login, logout
+│       ├── parcelleService.ts    # Fonctions Firestore : getParcelles, addParcelle, deleteParcelle
+│       └── recolteService.ts     # Fonctions Firestore : getRecoltes, addRecolte, deleteRecolte
+│
+└── assets/                       # Images et icônes de l'application
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Flux de navigation
 
-## Learn more
+```
+Lancement de l'app
+       │
+       ▼
+  _layout.tsx  ──── utilisateur connecté ? ──── OUI ──▶ (tabs)/parcelles
+       │
+      NON
+       │
+       ▼
+  register.tsx  ◀──────────────────────▶  login.tsx
+       │                                      │
+       └──────────────────────────────────────┘
+                          │
+                          ▼
+                  (tabs)/parcelles  ──▶  ajouterParcelle
+                  (tabs)/recoltes   ──▶  ajouterRecolte
+                  (tabs)/profil     ──▶  déconnexion
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## 🧰 Dépendances externes et leur rôle
 
-## Join the community
+| Dépendance | Version | Rôle |
+|---|---|---|
+| `expo` | ~54.0 | Framework principal pour le développement React Native multiplateforme |
+| `expo-router` | ~6.0 | Navigation basée sur les fichiers (comme Next.js mais pour mobile) |
+| `firebase` | ^12.9 | Backend cloud : authentification (Firebase Auth) + base de données (Firestore) |
+| `@expo/vector-icons` | ^15.0 | Bibliothèque d'icônes (Ionicons utilisé dans toute l'app) |
+| `react-native` | 0.81.5 | Framework de base pour créer des interfaces mobiles natives |
+| `react-native-screens` | ~4.16 | Optimisation des performances de navigation |
+| `react-native-safe-area-context` | ~5.6 | Gestion des zones sécurisées (encoche, barre de statut) |
+| `react-native-gesture-handler` | ~2.28 | Gestion des gestes tactiles pour la navigation |
+| `react-native-reanimated` | ~4.1 | Animations fluides |
+| `@react-navigation/native` | ^7.1 | Système de navigation sous-jacent utilisé par expo-router |
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# RecolteCheck
+## ⚙️ Guide d'installation et de configuration
+
+### Prérequis
+
+- [Node.js](https://nodejs.org/) v18 ou supérieur
+- [Expo Go](https://expo.dev/go) installé sur votre téléphone **ou** un émulateur Android/iOS configuré
+- Un compte [Firebase](https://firebase.google.com/)
+
+### Étape 1 — Cloner et installer les dépendances
+
+```bash
+git clone <url-du-repo>
+cd RecolteCheck
+npm install
+```
+
+### Étape 2 — Configurer Firebase
+
+1. Allez sur [Firebase Console](https://console.firebase.google.com/)
+2. Créez un nouveau projet
+3. Activez **Authentication** → méthode **Email/Mot de passe**
+4. Activez **Firestore Database**
+5. Copiez la configuration Firebase dans `src/config/firebase.ts`
+
+```ts
+const firebaseConfig = {
+  apiKey: "VOTRE_API_KEY",
+  authDomain: "VOTRE_PROJET.firebaseapp.com",
+  projectId: "VOTRE_PROJET",
+  storageBucket: "VOTRE_PROJET.appspot.com",
+  messagingSenderId: "VOTRE_ID",
+  appId: "VOTRE_APP_ID",
+};
+```
+
+### Étape 3 — Configurer les règles Firestore
+
+Dans Firebase Console → Firestore Database → **Rules**, collez :
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /parcelles/{id} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null;
+    }
+    match /recoltes/{id} {
+      allow read, write: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null;
+    }
+  }
+}
+```
+
+### Étape 4 — Démarrer l'application
+
+```bash
+npx expo start
+```
+
+Puis :
+- **Sur téléphone** : scannez le QR code avec l'application Expo Go
+- **Sur émulateur Android** : appuyez sur `a` dans le terminal
+- **Sur simulateur iOS** : appuyez sur `i` dans le terminal (macOS uniquement)
+
+---
+
+## 📱 Captures d'écran
+
+| Inscription | Parcelles | Récoltes | Profil |
+|---|---|---|---|
+| Formulaire d'inscription avec validation | Liste des parcelles avec ajout/suppression | Historique des récoltes par zone | Informations du compte + déconnexion |
+
+---
+
+## 👨‍💻 Développé avec
+
+- **React Native** + **Expo** — Application mobile cross-platform
+- **Firebase** — Authentification et stockage des données cloud
+- **TypeScript** — Typage statique pour un code plus fiable
+- **Expo Router** — Navigation déclarative basée sur les fichiers
