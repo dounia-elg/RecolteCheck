@@ -15,7 +15,9 @@ export default function RecoltesScreen() {
     setLoading(false);
   }, []);
 
-  useFocusEffect(load);
+  useFocusEffect(() => {
+    load();
+  });
 
   const handleDelete = (id: string, parcelle: string) => {
     Alert.alert("Supprimer", `Supprimer la récolte de "${parcelle}" ?`, [
